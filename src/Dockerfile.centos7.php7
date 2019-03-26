@@ -1,7 +1,7 @@
 FROM centos:7
 ENV PS1='\u@\h:\w$(if [ `id -u` = 0 ] ; then echo -n " #"; else echo -n " ><,(>"; fi) ' LC_ALL=en_US.utf8
 
-COPY dockerinit.sh dockersdunit.sh /usr/local/bin/
+COPY src/dockerinit.sh src/dockersdunit.sh /usr/local/bin/
 
 RUN yum -y install epel-release && \
     rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm && \
