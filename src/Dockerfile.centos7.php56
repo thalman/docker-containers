@@ -1,0 +1,51 @@
+FROM centos:7
+ENV PS1='\u@\h:\w$(if [ `id -u` = 0 ] ; then echo -n " ><,#>"; else echo -n " ><,(>"; fi) ' LC_ALL=en_US.utf8
+
+COPY src/dockerinit.sh src/dockersdunit.sh /usr/local/bin/
+RUN yum -y install epel-release yum-utils && \
+    yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm && \
+    yum-config-manager --enable remi-php56 && \
+    yum -y install httpd php \
+        php-bcmath \
+        php-cli \
+        php-common \
+        php-dba \
+        php-devel \
+        php-embedded \
+        php-enchant \
+        php-fpm \
+        php-gd \
+        php-imap \
+        php-interbase \
+        php-intl \
+        php-ldap \
+        php-mbstring \
+        php-mcrypt \
+        php-mysql \
+        php-odbc \
+        php-opcache \
+        php-pdo \
+        php-pdo_dblib \
+        php-pear \
+        php-pecl-apcu \
+        php-pecl-imagick \
+        php-pecl-memcached \
+        php-pecl-mongodb \
+        php-pecl-redis \
+        php-pecl-xdebug \
+        php-pgsql \
+        php-phpdbg \
+        php-process \
+        php-pspell \
+        php-recode \
+        php-snmp \
+        php-soap \
+        php-tidy \
+        php-xml \
+        php-xmlrpc  && \
+    yum clean all && \
+    rm -rf /var/cache/yum && \
+    (mkdir /etc/rc.docker || true) && \
+    ln -s /usr/local/bin/dockersdunit.sh /etc/rc.docker/httpd
+
+ENTRYPOINT /usr/local/bin/dockerinit.sh
