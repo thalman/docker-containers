@@ -16,7 +16,7 @@ stop() {
         sleep 1
         rm -f $PIDFILE
     fi
-    PIDS=`ps -ef  | grep http[d] | awk '{ print $2 }'`
+    PIDS=`ps -ef  | grep /usr/sbin/http[d] | awk '{ print $2 }'`
     if [ "$PIDS" != "" ]; then
         kill -9 $PIDS
     fi
