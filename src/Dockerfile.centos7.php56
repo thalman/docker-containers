@@ -43,6 +43,7 @@ RUN yum -y install epel-release yum-utils && \
         php-tidy \
         php-xml \
         php-xmlrpc  && \
+    sed -r -i -e 's/(^LoadModule.+auth_digest_module.+$)/#\1/' /etc/httpd/conf.modules.d/00-base.conf && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     (mkdir /etc/rc.docker || true) && \
